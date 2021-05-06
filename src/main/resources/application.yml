@@ -1,0 +1,34 @@
+server:
+  port: 8090
+
+spring:
+#  liquibase:
+#    url: jdbc:oracle:thin:@localhost:1521:BD
+#    user: user
+#    password: pass
+#    enabled: true
+  r2dbc:
+    url: r2dbc:oracle://localhost:1521/BD
+    username: user
+    password: pass
+    pool:
+      enabled: true
+
+  cloud:
+    gateway:
+      routes:
+        - id: token_route
+          uri: https://google.com
+          predicates:
+            - Path=/token
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
